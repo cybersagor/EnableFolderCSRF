@@ -1,0 +1,2 @@
+# EnableFolderCSRF
+Enable Folder CSRF
